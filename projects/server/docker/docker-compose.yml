@@ -1,0 +1,40 @@
+version: "3"
+services:
+
+  db:
+    container_name: chamfer_db
+    image: mariadb
+    restart: always
+    env_file: ./environments/api.env
+    environment:
+      MARIADB_ROOT_PASSWORD: test
+      MARIADB_ROOT_HOST: localhost
+      TZ: Asia/Seoul
+    volumes:
+      - ./docker/mariadb:/var/lib/mysql
+
+  api:
+    container_name: chamfer_api
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: ./Dockerfile.api
+    ports:
+      - 2800:2800
+    volumes:
+      - ./docker/chamfer_api/log:/usr/src/api/log
+      - ./environments:/usr/src/api/environments
+
+  ng:
+    container_name: chamfer_ng
+    depends_on:
+      - api
+    build:
+      context: .
+      dockerfile: ./Dockerfile.ng
+    ports:
+      - 2400:2400
+    volumes:
+      - ./docker/chamfer_ng/web:/usr/src/ng/web
+      - ./environments:/usr/src/ng/environments

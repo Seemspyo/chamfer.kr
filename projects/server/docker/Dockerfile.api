@@ -1,0 +1,12 @@
+# Dockerfile for API server
+FROM node:14
+
+WORKDIR /usr/src/api
+
+COPY api.js .
+COPY wait-for-it.sh .
+
+RUN chmod +x ./wait-for-it.sh
+
+ENTRYPOINT [ "/bin/bash", "-c" ]
+CMD [ "./wait-for-it.sh chamfer_db:3306 -t 60 -- node api.js" ]

@@ -1,0 +1,12 @@
+# Dockerfile for Angular universal server
+FROM node:14
+
+WORKDIR /usr/src/ng
+
+COPY ng.js .
+COPY wait-for-it.sh .
+
+RUN chmod +x ./wait-for-it.sh
+
+ENTRYPOINT [ "/bin/bash", "-c" ]
+CMD [ "./wait-for-it.sh chamfer_api:2800 -t 60 -- node ng.js" ]
