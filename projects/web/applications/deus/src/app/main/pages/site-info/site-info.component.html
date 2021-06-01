@@ -1,0 +1,22 @@
+<section class="site-section">
+
+  <h2 class="site-section-title">하단 정보 설정</h2>
+
+  <form class="site-form" [formGroup]="siteInfoForm" (ngSubmit)="save()">
+  
+    <button
+      class="site-form-submit"
+      type="submit"
+      mat-raised-button
+      [disabled]="!canSave()"
+      color="primary"
+    ><mat-icon>save</mat-icon> 저장</button>
+  
+    <mat-form-field class="site-form-item">
+      <mat-label>하단 정보</mat-label>
+      <textarea matInput formControlName="footerText"></textarea>
+    </mat-form-field>
+  
+  </form>
+
+</section>

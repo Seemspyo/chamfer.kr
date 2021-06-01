@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+  display: flex;
+}
+
+.dashboard-card {
+  margin: 12px;
+  padding: 24px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(#000, 0.2);
+
+  &-title {
+    font: {
+      size: 20px;
+      weight: 600;
+    }
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+}

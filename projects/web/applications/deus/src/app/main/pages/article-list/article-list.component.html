@@ -1,0 +1,79 @@
+<div class="console">
+
+  <form class="console-search" [formGroup]="searchForm">
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색 항목</mat-label>
+      <mat-select formControlName="searchTargets" multiple>
+        <mat-option value="title">제목</mat-option>
+        <mat-option value="uri">URL</mat-option>
+        <mat-option value="content">내용</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색값</mat-label>
+      <input matInput formControlName="searchValue" (keydown)="refresh()">
+    </mat-form-field>
+
+    <div class="console-search-item">
+      <mat-slide-toggle formControlName="onlyDraft" (change)="refresh()">작성 중인 글만 보기</mat-slide-toggle>
+    </div>
+
+  </form>
+
+  <div class="console-action">
+
+    <a
+      class="console-action-button"
+      routerLink="/articles/write"
+      [queryParams]="{ category: category }"
+      mat-raised-button
+      color="primary"
+    ><mat-icon>create</mat-icon> 글쓰기</a>
+
+  </div>
+
+</div>
+
+<ul class="article-list">
+
+  <li class="article-item" *ngFor="let article of articleListModel">
+
+    <div class="article-info">
+      <h3 class="article-info-title">
+        <ng-container *ngIf="article.isDraft">[작성 중] </ng-container>
+        <ng-container *ngIf="!article.isDraft && article.locked">[비공개] </ng-container>
+        {{ article.title }}
+      </h3>
+      <span class="article-info-item" *ngIf="article.author">작성자: {{ article.author.username }}</span>
+      <span class="article-info-item">최초 작성일: {{ article.createdAt | date: 'yyyy. MM. dd. HH:mm' }}</span>
+      <span class="article-info-item" *ngIf="_dateGreaterThan(article.createdAt, article.lastUpdatedAt)">마지막 수정: {{ article.lastUpdatedAt | date: 'yyyy. MM. dd. HH:mm' }}</span>
+    </div>
+
+    <div class="article-console">
+      <a
+        class="article-console-button"
+        [routerLink]="[ '/articles/write', article.id ]"
+        mat-stroked-button
+        color="primary"
+      >수정</a>
+      <button
+        class="article-console-button"
+        type="button"
+        mat-stroked-button
+        color="warn"
+        (click)="_deleteArticle(article)"
+      >삭제</button>
+    </div>
+
+  </li>
+
+</ul>
+
+<mat-paginator
+  class="paginator"
+  [length]="totalLength"
+  [pageSize]="10"
+  [pageSizeOptions]="[ 10, 30, 50 ]"
+></mat-paginator>

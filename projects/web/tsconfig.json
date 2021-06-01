@@ -1,0 +1,25 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "extends": "../../tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": false,
+    "declaration": false,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "target": "ES2018",
+    "module": "ES2020",
+    "lib": [
+      "ES2018",
+      "DOM",
+      "DOM.Iterable"
+    ]
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

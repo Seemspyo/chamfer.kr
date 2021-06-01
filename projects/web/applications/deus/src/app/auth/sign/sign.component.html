@@ -1,0 +1,48 @@
+<div class="sign-box">
+
+  <div class="sign-box-title">
+    <h1>
+      <img src="https://cdn.chamfer.kr/logo.png" alt="CHAMFER">
+    </h1>
+  </div>
+
+  <form
+    class="sign-form"
+    [formGroup]="form"
+    (ngSubmit)="signIn()"
+  >
+
+    <mat-form-field class="sign-form-item">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" required>
+    </mat-form-field>
+
+    <mat-form-field class="sign-form-item">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        [type]="passwordVisibility ? 'text' : 'password'"
+        required
+      >
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="togglePasswordVisibility()"
+      >
+        <mat-icon color="primary">{{ passwordVisibility ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button
+      class="sign-form-submit"
+      mat-flat-button
+      type="submit"
+      [disabled]="!canSignIn()"
+      color="primary"
+    >Authorize</button>
+
+  </form>
+
+</div>

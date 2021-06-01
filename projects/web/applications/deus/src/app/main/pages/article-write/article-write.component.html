@@ -1,0 +1,50 @@
+<form class="write-form" [formGroup]="articleForm" (ngSubmit)="save()">
+
+  <div class="write-form-group">
+
+    <mat-form-field class="write-form-item">
+      <mat-label>카테고리</mat-label>
+      <mat-select formControlName="category" required>
+        <mat-option value="notice">공지사항</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="write-form-item write-form-group-auto">
+      <mat-label>제목</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
+
+  </div>
+
+  <mat-form-field class="write-form-item">
+    <mat-label>URI</mat-label>
+    <input matInput formControlName="uri">
+    <mat-hint>글 번호 대신 사용할 주소 블럭 (예시: https://chamfer.kr/notice/{{ articleForm.get('uri')!.value }})</mat-hint>
+  </mat-form-field>
+
+  <div class="write-form-item">
+    <mat-slide-toggle formControlName="locked">비공개</mat-slide-toggle>
+  </div>
+
+  <toast-editor class="write-form-editor" formControlName="content"></toast-editor>
+
+  <div class="write-form-console">
+    <button
+      *ngIf="_isDraft()"
+      class="write-form-console-button"
+      type="button"
+      mat-raised-button
+      color="accent"
+      [disabled]="!canSave()"
+      (click)="saveAsDraft()"
+    >임시 저장</button>
+    <button
+      class="write-form-console-button"
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="!canSave()"
+    ><mat-icon>save</mat-icon> 저장<ng-container *ngIf="_isDraft()"> 및 게시</ng-container></button>
+  </div>
+
+</form>

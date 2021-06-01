@@ -1,0 +1,27 @@
+.slide-tab {
+  display: flex;
+
+  &-pagination {
+    flex-shrink: 0;
+    min-width: auto;
+    padding: 0 8px;
+  }
+
+  &-item {
+
+    &-container {
+      width: 100%;
+      flex: auto;
+      overflow-x: auto;
+    }
+
+    &-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    flex-shrink: 0;
+
+  }
+
+}

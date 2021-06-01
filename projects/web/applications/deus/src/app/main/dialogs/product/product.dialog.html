@@ -1,0 +1,98 @@
+<div class="product-dialog-header" matDialogTitle>
+
+  <h2>상품 {{ mode === 'create' ? '등록' : '수정' }}</h2>
+
+  <button
+    class="product-dialog-close"
+    type="button"
+    mat-icon-button
+    matDialogClose
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+</div>
+
+<mat-dialog-content class="product-dialog-content">
+
+  <form class="product-dialog-form" [formGroup]="productForm" (ngSubmit)="save()">
+
+    <mat-form-field class="product-dialog-form-item">
+      <mat-label>상품 노출 방식</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option [value]="_productTypes.forward">포워딩</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="product-dialog-form-item" *ngIf="!_isCurrentTypeIs(_productTypes.forward)">
+      <mat-label>URI</mat-label>
+      <input matInput formControlName="uri" required>
+      <mat-hint>상품의 주소(예시: https://chamfer.kr/products/{{ productForm.get('uri')!.value }})</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="product-dialog-form-item">
+      <mat-label>상품명</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
+
+    <mat-form-field class="product-dialog-form-item" *ngIf="!_isCurrentTypeIs(_productTypes.forward)">
+      <mat-label>상품 설명</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="product-dialog-form-item" *ngIf="_isCurrentTypeIs(_productTypes.forward)">
+      <mat-label>포워딩 링크</mat-label>
+      <input matInput formControlName="link" required>
+    </mat-form-field>
+
+    <mat-form-field class="product-dialog-form-item">
+      <mat-label>상품 가격</mat-label>
+      <input matInput formControlName="price" type="number">
+    </mat-form-field>
+
+    <div class="product-dialog-form-item">
+      <h5>상품 썸네일 이미지</h5>
+      <upload-input accept="image/*" (change)="_resolveAndSetImages($event)" [multiple]="true">
+    
+        <div class="product-dialog-form-image-alt" *ngIf="!_getCurrentThumbnails().length; else thumbnailAlt">
+          <mat-icon>add_a_photo</mat-icon>
+          <span>클릭 또는 드래그로 이미지 추가</span>
+        </div>
+    
+        <ng-template #thumbnailAlt>
+          <div class="product-dialog-form-image-container">
+            <div class="product-dialog-form-image" *ngFor="let url of _getCurrentThumbnails()">
+              <img [src]="url">
+              <button
+                mat-mini-fab
+                type="button"
+                color="warn"
+                (click)="$event.stopPropagation();_removeThumbnail(url)"
+              >
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+    
+      </upload-input>
+    </div>
+
+    <div class="product-dialog-form-item">
+      <mat-slide-toggle formControlName="locked">비공개</mat-slide-toggle>
+    </div>
+
+    <div class="product-dialog-actions" matDialogActions>
+      <button
+        class="product-dialog-form-submit"
+        type="submit"
+        matDialog
+        mat-flat-button
+        [disabled]="!canSave()"
+        color="primary"
+      >저장</button>
+    </div>
+
+  </form>
+
+</mat-dialog-content>

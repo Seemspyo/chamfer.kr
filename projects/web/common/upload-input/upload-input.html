@@ -1,0 +1,9 @@
+<ng-content></ng-content>
+<input
+  class="upload-input-native"
+  #fileInput
+  type="file"
+  [accept]="accept"
+  [multiple]="multiple"
+  (change)="_onFileInput()"
+>

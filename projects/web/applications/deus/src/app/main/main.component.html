@@ -1,0 +1,93 @@
+<mat-toolbar class="main-header" color="primary">
+  <h1 class="main-header-title">
+    <a routerLink="/">
+      <img src="https://cdn.chamfer.kr/logo.png" alt="CHAMFER">
+    </a>
+  </h1>
+  <span class="main-header-spacer"></span>
+  <button
+    class="main-header-menu"
+    mat-icon-button
+    type="button"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+
+  <div mat-menu-item disabled>
+    <mat-icon>face</mat-icon>
+    <span><b>{{ _user.username }}</b> 님</span>
+  </div>
+
+  <button mat-menu-item (click)="_openMyDialog()">
+    <mat-icon>manage_accounts</mat-icon>
+    <span>내 계정 관리</span>
+  </button>
+
+  <button mat-menu-item (click)="_signOut()">
+    <mat-icon>logout</mat-icon>
+    <span>로그아웃</span>
+  </button>
+
+</mat-menu>
+
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
+
+<nav class="main-nav">
+  <button
+    *ngIf="navModel !== navDatas"
+    class="main-nav-back"
+    mat-icon-button
+    type="button"
+    matTooltip="뒤로 가기"
+    (click)="_setNavigationByPath(navPath.slice(0, navPath.length - 2))"
+  >
+    <mat-icon>arrow_drop_down_circle</mat-icon>
+  </button>
+  <slide-tab class="main-nav-slide" [initialTab]="_slideTabInitial" [@tabItemAnimation]="navDepth">
+    <ng-container *ngFor="let nav of navModel">
+
+      <button
+        slideTabItem
+        *ngIf="nav.type === 'group'"
+        class="main-nav-button"
+        type="button"
+        mat-button
+        (click)="_selectGroup(nav)"
+      ><mat-icon *ngIf="nav.iconText">{{ nav.iconText }}</mat-icon>{{ nav.label }}</button>
+
+      <a
+        slideTabItem
+        *ngIf="nav.type === 'routerLink'"
+        class="main-nav-button"
+        [routerLink]="nav.link"
+        mat-button
+      ><mat-icon *ngIf="nav.iconText">{{ nav.iconText }}</mat-icon>{{ nav.label }}</a>
+
+      <a
+        slideTabItem
+        *ngIf="nav.type === 'outerLink'"
+        class="main-nav-button"
+        [routerLink]="nav.href"
+        [attr.target]="nav.target || null"
+        [attr.rel]="nav.rel || null"
+        mat-button
+      ><mat-icon *ngIf="nav.iconText">{{ nav.iconText }}</mat-icon>{{ nav.label }}</a>
+
+      <button
+        slideTabItem
+        *ngIf="nav.type === 'button'"
+        class="main-nav-button"
+        type="button"
+        mat-button
+        (click)="nav.action()"
+      ><mat-icon *ngIf="nav.iconText">{{ nav.iconText }}</mat-icon>{{ nav.label }}</button>
+
+    </ng-container>
+  </slide-tab>
+</nav>

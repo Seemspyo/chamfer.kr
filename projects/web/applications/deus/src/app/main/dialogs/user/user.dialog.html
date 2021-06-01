@@ -1,0 +1,63 @@
+<div class="user-dialog-header" matDialogTitle>
+
+  <h2>사용자 {{ mode === 'create' ? '등록' : '수정' }}</h2>
+
+  <button
+    class="user-dialog-close"
+    type="button"
+    mat-icon-button
+    matDialogClose
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+</div>
+
+<mat-dialog-content class="user-dialog-content">
+
+  <form class="user-dialog-form" [formGroup]="userForm" (ngSubmit)="save()">
+
+    <mat-form-field class="user-dialog-form-item">
+      <mat-label>이름</mat-label>
+      <input matInput formControlName="username" required>
+    </mat-form-field>
+
+    <mat-form-field class="user-dialog-form-item">
+      <mat-label>이메일</mat-label>
+      <input matInput formControlName="email" required>
+    </mat-form-field>
+
+    <mat-form-field class="user-dialog-form-item">
+      <mat-label>비밀번호</mat-label>
+      <input matInput formControlName="password" type="password" [required]="mode === 'create'">
+      <mat-error *ngIf="userForm.get('password')?.hasError('minLength')">비밀번호는 최소 6자리입니다.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="user-dialog-form-item">
+      <mat-label>비밀번호 확인</mat-label>
+      <input matInput formControlName="passwordCheck" type="password" [required]="mode === 'create'">
+      <mat-error *ngIf="userForm.get('passwordCheck')?.hasError('matchWith')">비밀번호가 일치하지 않습니다.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="user-dialog-form-item" *ngIf="currentUser !== _me">
+      <mat-label>권한</mat-label>
+      <mat-select formControlName="roles" multiple required>
+        <mat-option [value]="_userRoles.admin" *ngIf="_me.roles.includes(_userRoles.deus)">관리자</mat-option>
+        <mat-option [value]="_userRoles.common">일반 회원</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="user-dialog-actions" matDialogActions>
+      <button
+        class="user-dialog-form-submit"
+        type="submit"
+        matDialog
+        mat-flat-button
+        [disabled]="!canSave()"
+        color="primary"
+      >저장</button>
+    </div>
+
+  </form>
+
+</mat-dialog-content>

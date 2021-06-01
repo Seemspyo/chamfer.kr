@@ -1,0 +1,109 @@
+<div class="banner-dialog-header" matDialogTitle>
+
+  <h2>사용자 {{ mode === 'create' ? '등록' : '수정' }}</h2>
+
+  <button
+    class="banner-dialog-close"
+    type="button"
+    mat-icon-button
+    matDialogClose
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+</div>
+
+<mat-dialog-content class="banner-dialog-content">
+
+  <form class="banner-dialog-form" [formGroup]="bannerForm" (ngSubmit)="save()">
+
+    <mat-form-field class="banner-dialog-form-item">
+      <mat-label>배너 이름</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-hint>외부에 노출 X, 관리자 용</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="banner-dialog-form-item">
+      <mat-label>링크</mat-label>
+      <input matInput formControlName="link">
+      <mat-hint>클릭했을 때 이동할 주소</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="banner-dialog-form-item">
+      <mat-label>링크 이동 방식</mat-label>
+      <mat-select formControlName="linkTarget">
+        <mat-option [value]="_linkTargets.blank">새 탭</mat-option>
+        <mat-option [value]="_linkTargets.self">현재 탭</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="banner-dialog-form-item">
+      <h5>배너 이미지 *</h5>
+      <ng-container *ngTemplateOutlet="ImageInputTemplate;context: { name: 'thumbnailURL' }"></ng-container>
+    </div>
+
+    <div class="banner-dialog-form-item">
+      <h5>모바일 배너 이미지</h5>
+      <ng-container *ngTemplateOutlet="ImageInputTemplate;context: { name: 'thumbnailURLAlt' }"></ng-container>
+    </div>
+
+    <mat-form-field class="banner-dialog-form-item">
+      <mat-label>시작일</mat-label>
+      <input matInput [ngxMatDatetimePicker]="startPicker" formControlName="startDisplayAt">
+      <mat-datepicker-toggle matSuffix [for]="_any(startPicker)"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #startPicker></ngx-mat-datetime-picker>
+      <mat-hint>미 입력 시 무기한</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="banner-dialog-form-item">
+      <mat-label>종료일</mat-label>
+      <input matInput [ngxMatDatetimePicker]="endPicker" formControlName="endDisplayAt">
+      <mat-datepicker-toggle matSuffix [for]="_any(endPicker)"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #endPicker></ngx-mat-datetime-picker>
+      <mat-hint>미 입력 시 무기한</mat-hint>
+    </mat-form-field>
+
+    <div class="banner-dialog-form-item">
+      <mat-slide-toggle formControlName="active">노출</mat-slide-toggle>
+    </div>
+
+    <div class="banner-dialog-actions" matDialogActions>
+      <button
+        class="banner-dialog-form-submit"
+        type="submit"
+        matDialog
+        mat-flat-button
+        [disabled]="!canSave()"
+        color="primary"
+      >저장</button>
+    </div>
+
+  </form>
+
+</mat-dialog-content>
+
+
+<ng-template #ImageInputTemplate let-name="name">
+  <upload-input accept="image/*" (change)="_resolveAndSetImage($event, name)">
+
+    <div class="banner-dialog-form-image-alt" *ngIf="!bannerForm.get(name)!.value; else thumbnailAlt">
+      <mat-icon>add_a_photo</mat-icon>
+      <span>클릭 또는 드래그로 이미지 추가</span>
+    </div>
+
+    <ng-template #thumbnailAlt>
+      <div class="banner-dialog-form-image">
+        <img [src]="bannerForm.get(name)!.value">
+        <button
+          mat-mini-fab
+          type="button"
+          color="warn"
+          (click)="$event.stopPropagation();_clearImage(name)"
+        >
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+
+  </upload-input>
+</ng-template>

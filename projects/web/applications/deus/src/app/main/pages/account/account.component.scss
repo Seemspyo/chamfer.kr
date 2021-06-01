@@ -1,0 +1,114 @@
+:host {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.console {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+
+  &-action {
+    margin-left: auto;
+
+    &-button {
+
+      &:not(:first-child) {
+        margin-left: 12px;
+      }
+
+    }
+
+  }
+
+}
+
+.account {
+
+  &-list {
+    padding: 36px 0;
+  }
+
+  &-item {
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 0 8px rgba(#000, 0.1);
+
+    &:not(:first-of-type) {
+      margin-top: 12px;
+    }
+
+  }
+
+  &-profile {
+    display: flex;
+    align-items: flex-start;
+
+    &-image {
+      flex-shrink: 0;
+      margin-right: 12px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: var(--color-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &-alt {
+        font-size: 36px;
+        width: 36px; height: 36px;
+        color: #fff;
+      }
+
+    }
+
+    &-info {
+      font-size: 16px;
+    }
+
+    &-name {
+      font: {
+        size: 1.2em;
+        weight: 600;
+      }
+      line-height: 0.7;
+    }
+
+    &-email {
+      font: {
+        size: 0.8em;
+        weight: 300;
+      }
+      color: #8e8e8e;
+    }
+
+  }
+
+  &-roles {
+    margin: 12px 0;
+    font: {
+      size: 14px;
+      weight: 500;
+    }
+  }
+
+  &-console {
+    display: flex;
+
+    &-button {
+
+      &:not(:first-child) {
+        margin-left: 12px;
+      }
+      
+    }
+
+  }
+
+}
+
+.paginator {
+  margin-top: auto;
+}

@@ -1,0 +1,27 @@
+<button
+  *ngIf="_overflowed"
+  class="slide-tab-pagination slide-tab-pagination-prev"
+  type="button"
+  mat-button
+  (click)="_navigate('prev')"
+  [disabled]="currentIndex() === 0"
+>
+  <mat-icon>navigate_before</mat-icon>
+</button>
+
+<div class="slide-tab-item-container" #scrollContainer>
+  <div class="slide-tab-item-wrapper">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+<button
+  *ngIf="_overflowed"
+  class="slide-tab-pagination slide-tab-pagination-next"
+  type="button"
+  mat-button
+  (click)="_navigate('next')"
+  [disabled]="currentIndex() === _maxIndex"
+>
+  <mat-icon>navigate_next</mat-icon>
+</button>

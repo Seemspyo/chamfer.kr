@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  max-width: 100%;
+}
+
+.user-dialog {
+
+  &-header {
+    display: flex;
+
+    h2 {
+      font: {
+        size: 20px;
+        weight: 600;
+      }
+    }
+
+  }
+
+  &-close {
+    margin-left: auto;
+  }
+
+  &-form {
+    width: 100%;
+
+    &-item {
+      width: 100%;
+    }
+
+  }
+
+  &-actions {
+    justify-content: center;
+  }
+
+}

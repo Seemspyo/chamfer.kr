@@ -1,0 +1,79 @@
+<div class="console">
+
+  <form class="console-search" [formGroup]="searchForm">
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색 항목</mat-label>
+      <mat-select formControlName="searchTargets" multiple>
+        <mat-option value="username">이름</mat-option>
+        <mat-option value="email">이메일</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색값</mat-label>
+      <input matInput formControlName="searchValue" (keydown)="refresh()">
+    </mat-form-field>
+
+  </form>
+
+  <div class="console-action">
+
+    <button
+      class="console-action-button"
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="_openUserDialogOf()"
+    ><mat-icon>person_add</mat-icon> 사용자 등록</button>
+
+  </div>
+
+</div>
+
+<ul class="account-list">
+
+  <li class="account-item" *ngFor="let user of userListModel">
+
+    <div class="account-profile">
+      <div class="account-profile-image">
+        <mat-icon class="account-profile-image-alt">account_circle</mat-icon>
+      </div>
+      <div class="account-profile-info">
+        <h3 class="account-profile-name">{{ user.username }}</h3>
+        <span class="account-profile-email">{{ user.email }}</span>
+      </div>
+    </div>
+
+    <div class="account-roles">
+      <span>{{ _resolveUserRoles(user.roles).join(' / ') }}</span>
+    </div>
+
+    <div class="account-console" *ngIf="_canUpdate(user.roles)">
+      <button
+        class="account-console-button"
+        type="button"
+        mat-stroked-button
+        color="primary"
+        (click)="_openUserDialogOf(user)"
+      >수정</button>
+      <button
+        *ngIf="_canDelete(user.roles)"
+        class="account-console-button"
+        type="button"
+        mat-stroked-button
+        color="warn"
+        (click)="_deleteUser(user)"
+      >삭제</button>
+    </div>
+
+  </li>
+
+</ul>
+
+<mat-paginator
+  class="paginator"
+  [length]="totalLength"
+  [pageSize]="10"
+  [pageSizeOptions]="[ 10, 30, 50 ]"
+></mat-paginator>

@@ -1,0 +1,108 @@
+{
+  "$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "applications",
+  "cli": {
+    "analytics": false,
+    "packageManager": "yarn"
+  },
+  "projects": {
+
+    "deus": {
+      "projectType": "application",
+      "root": "applications/deus",
+      "sourceRoot": "applications/deus/src",
+      "prefix": "deus",
+      "architect": {
+
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "@angular/platform-server"
+            ],
+            "outputPath": "dist/deus/browser",
+            "index": "applications/deus/src/index.html",
+            "main": "applications/deus/src/main.ts",
+            "polyfills": "applications/deus/src/polyfills.ts",
+            "tsConfig": "applications/deus/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "applications/deus/src/favicon.ico",
+              "applications/deus/src/assets"
+            ],
+            "styles": [
+              "applications/deus/src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "applications/deus/src/environments/env.ts",
+                  "with": "applications/deus/src/environments/env.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "bundles",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "10kb",
+                  "maximumError": "16kb"
+                }
+              ]
+            }
+          }
+        },
+
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "deus:build",
+            "disableHostCheck": true
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "deus:build:production"
+            }
+          }
+        },
+
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/deus/server",
+            "main": "applications/deus/src/main.server.ts",
+            "tsConfig": "applications/deus/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "none",
+              "fileReplacements": [
+                {
+                  "replace": "applications/deus/src/environments/env.ts",
+                  "with": "applications/deus/src/environments/env.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        }
+
+      }
+    }
+
+  }
+}

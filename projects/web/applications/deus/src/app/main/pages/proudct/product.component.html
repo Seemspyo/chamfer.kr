@@ -1,0 +1,72 @@
+<div class="console">
+
+  <form class="console-search" [formGroup]="searchForm">
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색 항목</mat-label>
+      <mat-select formControlName="searchTargets" multiple>
+        <mat-option value="title">상품명</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색값</mat-label>
+      <input matInput formControlName="searchValue" (keydown)="refresh()">
+    </mat-form-field>
+
+  </form>
+
+  <div class="console-action">
+
+    <button
+      class="console-action-button"
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="_openProductDialogOf()"
+    ><mat-icon>add_business</mat-icon> 상품 등록</button>
+
+  </div>
+
+</div>
+
+<ul class="product-list">
+
+  <li class="product-item" *ngFor="let product of productListModel">
+
+    <div class="product-info">
+      <h3 class="product-info-title">
+        <ng-container *ngIf="product.locked">[비공개] </ng-container>
+        {{ product.title }}
+      </h3>
+      <span class="product-info-price">가격: {{ product.price | currency: 'KRW' }}</span>
+      <span class="product-info-locked">등록일: {{ product.createdAt | date: 'yyyy. MM. dd.' }}</span>
+    </div>
+
+    <div class="product-console">
+      <button
+        class="product-console-button"
+        type="button"
+        mat-stroked-button
+        color="primary"
+        (click)="_openProductDialogOf(product)"
+      >수정</button>
+      <button
+        class="product-console-button"
+        type="button"
+        mat-stroked-button
+        color="warn"
+        (click)="_deleteProduct(product)"
+      >삭제</button>
+    </div>
+
+  </li>
+
+</ul>
+
+<mat-paginator
+  class="paginator"
+  [length]="totalLength"
+  [pageSize]="10"
+  [pageSizeOptions]="[ 10, 30, 50 ]"
+></mat-paginator>

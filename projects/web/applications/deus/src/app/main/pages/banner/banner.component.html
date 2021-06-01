@@ -1,0 +1,76 @@
+<div class="console">
+
+  <form class="console-search" [formGroup]="searchForm">
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색 항목</mat-label>
+      <mat-select formControlName="searchTargets" multiple>
+        <mat-option value="name">이름</mat-option>
+        <mat-option value="link">링크</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색값</mat-label>
+      <input matInput formControlName="searchValue" (keydown)="refresh()">
+    </mat-form-field>
+
+  </form>
+
+  <div class="console-action">
+
+    <button
+      class="console-action-button"
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="_openBannerDialogOf()"
+    ><mat-icon>add_circle</mat-icon> 새 배너</button>
+
+  </div>
+
+</div>
+
+<ul class="banner-list">
+
+  <li class="banner-item" *ngFor="let banner of bannerListModel">
+
+    <div class="banner-info">
+      <h3 class="banner-info-title">
+        <ng-container *ngIf="!banner.active">[비공개] </ng-container>
+        {{ banner.name }}
+      </h3>
+      <span class="banner-info-date" *ngIf="banner.startDisplayAt || banner.endDisplayAt">
+        <ng-container *ngIf="banner.startDisplayAt">{{ banner.startDisplayAt | date: 'yyyy. MM. dd. HH:mm' }}</ng-container>
+        ~
+        <ng-container *ngIf="banner.endDisplayAt">{{ banner.endDisplayAt | date: 'yyyy. MM. dd. HH:mm' }}</ng-container>
+      </span>
+    </div>
+
+    <div class="banner-console">
+      <button
+        class="banner-console-button"
+        type="button"
+        mat-stroked-button
+        color="primary"
+        (click)="_openBannerDialogOf(banner)"
+      >수정</button>
+      <button
+        class="banner-console-button"
+        type="button"
+        mat-stroked-button
+        color="warn"
+        (click)="_deleteBanner(banner)"
+      >삭제</button>
+    </div>
+
+  </li>
+
+</ul>
+
+<mat-paginator
+  class="paginator"
+  [length]="totalLength"
+  [pageSize]="10"
+  [pageSizeOptions]="[ 10, 30, 50 ]"
+></mat-paginator>
