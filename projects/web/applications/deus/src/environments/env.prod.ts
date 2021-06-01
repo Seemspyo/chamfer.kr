@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   apiOrigin: 'https://api.chamfer.kr',
   graphqlPath: '/graphql'
 }
