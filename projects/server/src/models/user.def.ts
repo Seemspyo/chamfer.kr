@@ -2,7 +2,7 @@ import { ValueOf } from '@chamfer/util/dist/type-def';
 
 
 export const userProviders = {
-  email: 0
+  email: 'email'
 } as const;
 
 export type UserProvider = ValueOf<typeof userProviders>;

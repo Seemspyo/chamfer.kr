@@ -36,7 +36,7 @@ export class Product extends BaseModel {
   @Field(type => Int)
   id!: number;
 
-  @Column('int')
+  @Column('varchar', { length: 25 })
   @Field(type => productTypes)
   @IsIn(Object.values(productTypes))
   type!: ProductType;

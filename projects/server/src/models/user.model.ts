@@ -55,7 +55,7 @@ export class User extends BaseModel {
   @MaxLength(1024)
   password?: string;
 
-  @Column('int')
+  @Column('varchar', { length: 25 })
   @Field(type => userProviders)
   @IsIn(Object.values(userProviders))
   provider!: UserProvider;

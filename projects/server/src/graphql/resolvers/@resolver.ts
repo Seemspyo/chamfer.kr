@@ -9,7 +9,7 @@ export class ListSearch {
   orderBy?: string;
 
   @Field({ nullable: true, defaultValue: 'ASC' })
-  orderDirection!: 'ASC'|'DESC';
+  orderDirection?: 'ASC'|'DESC' = 'ASC';
 
   @Field(type => [ String ], { nullable: true, description: 'target properties to search', defaultValue: [] })
   searchTargets!: string[];

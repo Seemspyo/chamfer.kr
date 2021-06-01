@@ -16,6 +16,7 @@ import { GQLPermissionError } from '../../errors';
 import {
   adminUsers,
   allUsers,
+  userProviders,
   UserRole,
   userRoles
 } from '../../models/user.def';
@@ -138,7 +139,10 @@ export class UserResolver {
 
     const repo = this.connection.getRepository(User);
 
-    const user = Object.assign(repo.create(), input);
+    const user = Object.assign(repo.create(), {
+      ...input,
+      provider: userProviders.email
+    });
 
     return repo.save(user);
   }
@@ -225,7 +229,7 @@ export class UserResolver {
     const now = Date.now();
 
     Object.assign(targetUser, {
-      email: `${ now.toString(16) }.${ this.auth.cipher.SHAEncrypt(targetUser.email) }`,
+      email: `${ this.auth.cipher.SHAEncrypt(targetUser.email) }@${ now.toString(16) }.deleted`,
       username: `${ now.toString(16) }.${ this.auth.cipher.SHAEncrypt(targetUser.username) }`,
       deleted: true
     });

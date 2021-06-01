@@ -15,6 +15,7 @@ services:
 
   api:
     container_name: chamfer_api
+    restart: unless-stopped
     depends_on:
       - db
     build:
@@ -28,6 +29,7 @@ services:
 
   ng:
     container_name: chamfer_ng
+    restart: unless-stopped
     depends_on:
       - api
     build:

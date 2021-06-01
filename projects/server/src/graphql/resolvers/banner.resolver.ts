@@ -6,7 +6,6 @@ import {
   Field,
   FieldResolver,
   InputType,
-  Int,
   Mutation,
   ObjectType,
   Query,
@@ -44,7 +43,7 @@ export class BannerUpdateInput {
   link?: string;
 
   @Field(type => bannerLinkTargets, { nullable: true })
-  linkTargets?: BannerLinkTarget;
+  linkTarget?: BannerLinkTarget;
 
   @Field({ nullable: true })
   active?: boolean;
@@ -85,18 +84,33 @@ export class BannerResolver {
 
   @Query(returns => BannerListData)
   async getBannerList(
-    @Ctx() { user }: GQLContext,
-    @Arg('withActive', { defaultValue: false }) withActive: boolean,
     @Arg('search', { defaultValue: {} }) search: ListSearch,
     @Arg('paging', { nullable: true }) paging?: Paging
   ): Promise<BannerListData> {
-    const query = this.createBasicSelectQuery();
+    const query = this.createBasicSelectQuery()
+                      .setParameter('now', Date.now())
+                      .where(new Brackets(subQuery => subQuery.where('banner.startDisplayAt IS NULL OR banner.startDisplayAt < :now')))
+                      .andWhere(new Brackets(subQuery => subQuery.where('banner.endDisplayAt IS NULL OR banner.endDisplayAt > :now')))
+                      .andWhere('banner.active = :true');
 
-    const isAdmin = Boolean(user?.roles.some(role => adminUsers.includes(role as any)));
+    applySearch(query, search);
 
-    if (!(withActive && isAdmin)) {
-      query.andWhere('banner.active = :true');
+    if (paging) {
+      applyPagination(query, paging);
     }
+
+    const [ data, total ] = await query.getManyAndCount();
+
+    return { total, data }
+  }
+
+  @Authorized(adminUsers)
+  @Query(returns => BannerListData)
+  async getBannerListAll(
+    @Arg('search', { defaultValue: {} }) search: ListSearch,
+    @Arg('paging', { nullable: true }) paging?: Paging
+  ) {
+    const query = this.createBasicSelectQuery();
 
     applySearch(query, search);
 
@@ -150,15 +164,12 @@ export class BannerResolver {
   }
 
   private createBasicSelectQuery() {
-    const now = new Date();
 
     return this.connection
     .createQueryBuilder(Banner, 'banner')
-    .setParameters({ true: 1, false: 0, now })
+    .setParameters({ true: 1, false: 0 })
     .leftJoin('banner.author', 'author', 'author.deleted = :false')
-    .addSelect([ 'author.id' ])
-    .where(new Brackets(subQuery => subQuery.where('banner.startDisplayAt IS NULL OR banner.startDisplayAt < :now')))
-    .andWhere(new Brackets(subQuery => subQuery.where('banner.endDisplayAt IS NULL OR banner.endDisplayAt > :now')));
+    .addSelect([ 'author.id' ]);
   }
 
   @FieldResolver(type => User, { nullable: true })

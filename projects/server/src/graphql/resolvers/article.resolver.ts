@@ -51,7 +51,7 @@ export class ArticleUpdateInput {
   @Field({ nullable: true })
   category?: string;
 
-  @Field()
+  @Field({ nullable: true })
   title?: string;
 
   @Field({ nullable: true })
@@ -60,7 +60,7 @@ export class ArticleUpdateInput {
   @Field({ nullable: true })
   description?: string;
 
-  @Field()
+  @Field({ nullable: true })
   content?: string;
 
   @Field({ nullable: true })

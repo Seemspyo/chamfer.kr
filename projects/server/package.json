@@ -1,6 +1,6 @@
 {
   "name": "@chamfer/server",
-  "version": "0.0.0-alpha",
+  "version": "0.1.0-beta",
   "author": "Chamfer <chamfer@naver.com> (https://chamfer.kr)",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",

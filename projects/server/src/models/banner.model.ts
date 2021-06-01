@@ -57,7 +57,7 @@ export class Banner extends BaseModel {
   @MaxLength(512)
   link?: string;
 
-  @Column('int', { nullable: true })
+  @Column('varchar', { length: 12, nullable: true })
   @Field(type => bannerLinkTargets, { nullable: true })
   @IsOptional()
   @IsIn(Object.values(bannerLinkTargets))

@@ -10,6 +10,7 @@ export { productTypes, ProductType } from './src/models/product.def';
 export { uploadProviders, UploadProvider } from './src/models/upload.def';
 export { userRoles, userProviders, UserRole, UserProvider, allUsers, adminUsers } from './src/models/user.def';
 
+export type { SignInInput } from './src/graphql/resolvers/auth.resolver';
 export type { ListSearch, Paging } from './src/graphql/resolvers/@resolver';
 export type { ArticleFetchOptions, ArticleCreateInput, ArticleUpdateInput, ArticleListData } from './src/graphql/resolvers/article.resolver';
 export type { BannerCreateInput, BannerUpdateInput, BannerListData } from './src/graphql/resolvers/banner.resolver';
@@ -17,3 +18,4 @@ export type { ProductCreateInput, ProductUpdateInput, ProductListData } from './
 export type { UserCreateInput, UserUpdateInput, UserListData } from './src/graphql/resolvers/user.resolver';
 
 export { GQL_ERROR_CODES, GQLErrorCode } from './src/errors/code';
+export { AUTH_KEY } from './lib/auth-strategy/@auth-strategy';

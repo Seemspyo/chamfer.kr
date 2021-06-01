@@ -5,7 +5,7 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "target": "ES2018",
-    "module": "AMD",
+    "module": "ES2020",
     "strict": true,
     "declaration": true,
     "incremental": true

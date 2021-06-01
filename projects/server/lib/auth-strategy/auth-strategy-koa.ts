@@ -40,7 +40,7 @@ export class AuthStrategyKoa {
   }
 
   public deleteAuthToken(cookies: Cookies) {
-    cookies.set(AUTH_KEY, null);
+    cookies.set(AUTH_KEY, null, { domain: this.options.domain });
   }
 
   private resolveAuth(ctx: ParameterizedContext): AuthState|null {
