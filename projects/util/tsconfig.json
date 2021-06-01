@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "ES2018",
-    "module": "AMD",
+    "module": "ES2020",
     "moduleResolution": "node",
     "outDir": "dist",
     "declaration": true
