@@ -1,0 +1,68 @@
+<ul class="photo-list" #listContainer [@itemAnimation]="galleryModel.length">
+
+  <li class="photo-item-container" *ngFor="let photo of galleryModel">
+
+    <div class="photo-item">
+
+      <div
+        class="photo-item-wrapper"
+        tabindex="0"
+        (click)="openPhotoDialog(photo)"
+        (keydown)="handlePhotoKeyEvent($event, photo)"
+      >
+
+        <div class="photo-thumbnail">
+          <img [src]="photo.resourceURL" [alt]="photo.name">
+        </div>
+
+        <div class="photo-info">
+          <span class="photo-info-name">{{ photo.name }}</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </li>
+
+  <li class="photo-placeholder" *ngIf="!fetching && !galleryModel.length">
+    등록된 사진이 없습니다.
+  </li>
+
+</ul>
+
+<ul class="photo-list" *ngIf="fetching">
+
+  <li class="photo-item photo-item-dummy" *ngFor="let _ of range(9)">
+    <div class="photo-item-wrapper">
+      <div class="photo-thumbnail"></div>
+    </div>
+  </li>
+
+</ul>
+
+<ng-template #PhotoDialog>
+
+  <div
+    *ngIf="selectedPhoto"
+    #dialogContainer
+    class="photo-dialog"
+    [@dialogAnimation]="photoOverlayState"
+    (@dialogAnimation.done)="handleDialogAnimationEvent($event)"
+    (click)="dialogContainer === $event.target && closePhotoDialog()"
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+  >
+    <img [src]="selectedPhoto.resourceURL" [alt]="selectedPhoto.name">
+    <button
+      class="photo-dialog-close"
+      type="button"
+      (click)="closePhotoDialog()"
+      cdkFocusInitial
+      aria-label="close"
+    >
+      <svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"/></svg>
+    </button>
+  </div>
+
+</ng-template>

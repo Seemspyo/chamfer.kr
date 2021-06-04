@@ -40,7 +40,7 @@ export class ProductComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  private productDialogRef: MatDialogRef<any, CommonDialogResult>|null = null;
+  private productDialogRef: MatDialogRef<ProductDialog, CommonDialogResult>|null = null;
 
   private destroyed = new Subject<void>();
 

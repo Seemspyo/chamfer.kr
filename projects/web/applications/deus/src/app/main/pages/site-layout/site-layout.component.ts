@@ -12,7 +12,7 @@ import { ConfigAPI } from 'common/api/config.api';
 import { parseGQLError } from 'common/api/errors';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SiteLayoutData, siteLayoutId } from './site-layout.resolver';
+import { SiteLayoutData, siteLayoutId } from 'common/api/configs/site-layout.config';
 
 
 @Component({

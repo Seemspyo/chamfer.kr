@@ -8,8 +8,10 @@ import {
   ProductUpdateInput
 } from '@chamfer/server';
 import { GQLClient } from 'common/graphql/client';
+import { HTTP_STATE_EXPLICIT } from 'common/http-transfer';
 import gql from 'graphql-tag';
 import { map } from 'rxjs/operators';
+import { makeUniqueKey } from './make-unique-key';
 import { GQLFieldOf } from './selection';
 
 
@@ -47,7 +49,7 @@ export class ProductAPI {
       }
     `;
 
-    return this.graphql.query<{ data: ProductListData }>(query, { search, paging, withLocked }).pipe(
+    return this.graphql.query<{ data: ProductListData }>(query, { search, paging, withLocked }, { params: { [ HTTP_STATE_EXPLICIT ]: makeUniqueKey(search, paging, withLocked, select) } }).pipe(
       map(res => res.data)
     );
   }

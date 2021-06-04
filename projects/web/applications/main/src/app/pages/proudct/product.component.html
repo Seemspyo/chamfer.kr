@@ -1,0 +1,57 @@
+<ul class="product-list" #listContainer [@itemAnimation]="productListModel.length">
+
+  <li class="product-item" *ngFor="let product of productListModel">
+
+    <a class="product-item-wrapper" [href]="product.link" target="_blank">
+
+      <div class="product-thumbnail" *ngIf="product.thumbnailURLs.length">
+
+        <div class="product-thumbnail-wrapper">
+
+          <swiper
+            *ngIf="product.thumbnailURLs.length > 1; else SingleImageTemplate"
+            [loop]="true"
+            [autoplay]="{ delay: 3e3 }"
+            [speed]="1e3"
+          >
+            <ng-template swiperSlide *ngFor="let url of product.thumbnailURLs">
+              <img [src]="url" [alt]="product.title">
+            </ng-template>
+          </swiper>
+  
+          <ng-template #SingleImageTemplate>
+            <img [src]="product.thumbnailURLs[0]" [alt]="product.title">
+          </ng-template>
+
+        </div>
+
+      </div>
+
+      <div class="product-info">
+        <h5 class="product-info-title">{{ product.title }}</h5>
+        <span class="product-info-price">{{ product.price | currency: 'KRW' }}</span>
+      </div>
+
+    </a>
+
+  </li>
+
+  <li class="product-placeholder" *ngIf="!fetching && !productListModel.length">
+    등록된 상품이 없습니다.
+  </li>
+
+</ul>
+
+<ul class="product-list" *ngIf="fetching">
+
+  <li class="product-item product-item-dummy" *ngFor="let _ of range(6)">
+    <div class="product-item-wrapper">
+      <div class="product-thumbnail"></div>
+    </div>
+    <div class="product-info">
+      <h5 class="product-info-title"></h5>
+      <span class="product-info-price"></span>
+    </div>
+  </li>
+
+</ul>

@@ -15,7 +15,8 @@
       "ES2018",
       "DOM",
       "DOM.Iterable"
-    ]
+    ],
+    "noImplicitAny": false
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

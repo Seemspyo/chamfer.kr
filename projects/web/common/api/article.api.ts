@@ -10,9 +10,11 @@ import {
   User
 } from '@chamfer/server';
 import { GQLClient } from 'common/graphql/client';
+import { HTTP_STATE_EXPLICIT } from 'common/http-transfer';
 import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { makeUniqueKey } from './make-unique-key';
 import { GQLFieldOf } from './selection';
 
 
@@ -60,7 +62,7 @@ export class ArticleAPI {
       }
     `;
 
-    return this.graphql.query<{ data: ArticleListData }>(query, { options, search, paging }).pipe(
+    return this.graphql.query<{ data: ArticleListData }>(query, { options, search, paging }, { params: { [ HTTP_STATE_EXPLICIT ]: makeUniqueKey(options, search, paging, select, userSelect) } }).pipe(
       map(res => res.data)
     );
   }
@@ -79,7 +81,7 @@ export class ArticleAPI {
       }
     `;
 
-    return this.graphql.query<{ article: Article }>(query, { [ typeof uriOrId === 'number' ? 'id' : 'uri' ]: uriOrId }).pipe(
+    return this.graphql.query<{ article: Article }>(query, { [ typeof uriOrId === 'number' ? 'id' : 'uri' ]: uriOrId }, { params: { [ HTTP_STATE_EXPLICIT ]: makeUniqueKey(uriOrId, select, userSelect) } }).pipe(
       map(res => res.article)
     );
   }

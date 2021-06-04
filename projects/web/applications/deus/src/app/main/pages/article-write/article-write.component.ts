@@ -5,8 +5,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  OnInit,
-  ViewChild
+  OnInit
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,7 +14,6 @@ import { Article, ArticleCreateInput, ArticleUpdateInput } from '@chamfer/server
 import { VOID } from '@chamfer/util/dist/void';
 import { ArticleAPI } from 'common/api/article.api';
 import { parseGQLError } from 'common/api/errors';
-import { ToastEditor } from 'common/toast-editor-wrapper';
 import { interval, merge, Subject } from 'rxjs';
 import { exhaustMap, takeUntil } from 'rxjs/operators';
 
@@ -33,13 +31,12 @@ export class ArticleWriteComponent implements OnInit, AfterViewInit, OnDestroy {
   public mode!: 'create'|'update';
   public originalArticle?: Article;
 
+  public editorStyle!: toastui.PreviewStyle;
+
   private processing = false;
 
   private destroyed = new Subject<void>();
   private modeChanged = new Subject<void>();
-
-  @ViewChild(ToastEditor)
-  editorRef!: ToastEditor;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -73,10 +70,11 @@ export class ArticleWriteComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mediaObserver.observe(branchPoint)
       .pipe( takeUntil(this.destroyed) )
       .subscribe(data => {
-        this.editorRef.editor?.changePreviewStyle(data.matches ? 'tab' : 'vertical');
+        this.editorStyle = data.matches ? 'tab' : 'vertical';
+        this.changeDetector.markForCheck();
       });
-  
-      this.editorRef.editor?.changePreviewStyle(this.mediaObserver.isMatched(branchPoint) ? 'tab' : 'vertical');
+
+      this.editorStyle = this.mediaObserver.isMatched(branchPoint) ? 'tab' : 'vertical';
     }
   }
 

@@ -5,16 +5,21 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
   Input,
+  OnChanges,
   OnDestroy,
+  PLATFORM_ID,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import Editor from '@toast-ui/editor';
+import Editor, { EditorOptions } from '@toast-ui/editor';
 import { UploadAPI } from 'common/api/upload.api';
 import { VOID } from '@chamfer/util/dist/void';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -35,7 +40,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
     }
   ]
 })
-export class ToastEditor implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export class ToastEditor implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy {
 
   @ViewChild('editor')
   editorElRef!: ElementRef<HTMLElement>;
@@ -56,17 +61,30 @@ export class ToastEditor implements ControlValueAccessor, AfterViewInit, OnDestr
   }
   private _value = '';
 
+  @Input()
+  linkAttributes?: EditorOptions['linkAttribute'];
+
+  @Input()
+  previewStyle: 'tab'|'vertical' = 'vertical';
+
   onChange: (value: string) => void = VOID;
   onTouch = VOID;
 
   private destroyed = new Subject<void>();
 
+  private isBrowser: boolean;
+
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private upload: UploadAPI
-  ) { }
+    private upload: UploadAPI,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngAfterViewInit() {
+    if (!this.isBrowser) return;
+
     this.editor = new Editor({
       el: this.editorElRef.nativeElement,
       height: '100%',
@@ -76,7 +94,8 @@ export class ToastEditor implements ControlValueAccessor, AfterViewInit, OnDestr
       language: 'ko-KR',
       initialValue: this.value,
       previewHighlight: false,
-      previewStyle: 'vertical',
+      previewStyle: this.previewStyle,
+      linkAttribute: this.linkAttributes,
       hooks: {
         addImageBlobHook: async (file, next) => {
           const log = await this.upload.singleUpload(file as File, [ 'origin', 'path' ]).toPromise();
@@ -102,6 +121,14 @@ export class ToastEditor implements ControlValueAccessor, AfterViewInit, OnDestr
     }
 
     this.editor.on('blur', () => this.onTouch());
+  }
+
+  ngOnChanges({ previewStyle }: SimpleChanges) {
+    if (!this.editor) return;
+
+    if (previewStyle.currentValue !== previewStyle.previousValue) {
+      this.editor.changePreviewStyle(previewStyle.currentValue);
+    }
   }
 
   ngOnDestroy() {

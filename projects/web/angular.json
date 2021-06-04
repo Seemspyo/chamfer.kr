@@ -87,12 +87,124 @@
             "tsConfig": "applications/deus/tsconfig.server.json"
           },
           "configurations": {
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "applications/deus/src/environments/env.ts",
+                  "with": "applications/deus/src/environments/env.server.ts"
+                }
+              ]
+            },
             "production": {
               "outputHashing": "none",
               "fileReplacements": [
                 {
                   "replace": "applications/deus/src/environments/env.ts",
                   "with": "applications/deus/src/environments/env.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        }
+
+      }
+    },
+
+    "main": {
+      "projectType": "application",
+      "root": "applications/main",
+      "sourceRoot": "applications/main/src",
+      "prefix": "chamfer",
+      "architect": {
+
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "@angular/platform-server"
+            ],
+            "outputPath": "dist/main/browser",
+            "index": "applications/main/src/index.html",
+            "main": "applications/main/src/main.ts",
+            "polyfills": "applications/main/src/polyfills.ts",
+            "tsConfig": "applications/main/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "applications/main/src/favicon.ico",
+              "applications/main/src/assets"
+            ],
+            "styles": [
+              "applications/main/src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "applications/main/src/environments/env.ts",
+                  "with": "applications/main/src/environments/env.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "bundles",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "10kb",
+                  "maximumError": "16kb"
+                }
+              ]
+            }
+          }
+        },
+
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "main:build",
+            "disableHostCheck": true
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "main:build:production"
+            }
+          }
+        },
+
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/main/server",
+            "main": "applications/main/src/main.server.ts",
+            "tsConfig": "applications/main/tsconfig.server.json"
+          },
+          "configurations": {
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "applications/main/src/environments/env.ts",
+                  "with": "applications/main/src/environments/env.server.ts"
+                }
+              ]
+            },
+            "production": {
+              "outputHashing": "none",
+              "fileReplacements": [
+                {
+                  "replace": "applications/main/src/environments/env.ts",
+                  "with": "applications/main/src/environments/env.prod.ts"
                 }
               ],
               "sourceMap": false,

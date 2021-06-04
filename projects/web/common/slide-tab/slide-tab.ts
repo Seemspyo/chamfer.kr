@@ -46,7 +46,7 @@ export class SlideTab implements AfterContentInit, AfterViewInit, OnDestroy {
   scrollContainerRef?: ElementRef<HTMLElement>;
 
   private index = -1;
-  private resizeObserver!: ResizeObserver;
+  private resizeObserver?: ResizeObserver;
   private isBrowser!: boolean;
   _maxIndex = 0;
 
@@ -85,7 +85,7 @@ export class SlideTab implements AfterContentInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.resizeObserver.disconnect();
+    this.resizeObserver?.disconnect();
     this.destroyed.next();
     this.destroyed.complete();
   }

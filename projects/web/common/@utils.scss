@@ -1,0 +1,13 @@
+@function hex2RGBValues($hex) {
+
+  @return red($hex), green($hex), blue($hex);
+}
+
+@mixin colorMap2Variables($map: (), $prefix: 'color') {
+
+  @each $name, $color in $map {
+    --#{ $prefix }-#{ $name }: #{ $color };
+    --#{ $prefix }-#{ $name }-rgb: #{ hex2RGBValues($color) };
+  }
+
+}

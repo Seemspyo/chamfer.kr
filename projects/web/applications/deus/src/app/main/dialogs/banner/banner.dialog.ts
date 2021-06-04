@@ -60,7 +60,7 @@ export class BannerDialog implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setUserFormOf(this.currentBanner);
+    this.setBannerFormOf(this.currentBanner);
 
     // hook backdrop click event
     this.dialogRef.backdropClick().pipe(
@@ -158,7 +158,7 @@ export class BannerDialog implements OnInit, OnDestroy {
     this.changeDetector.markForCheck();
   }
 
-  private setUserFormOf(banner?: Banner) {
+  private setBannerFormOf(banner?: Banner) {
     this.bannerForm = this.formBuilder.group({
       name: [ banner?.name, [ Validators.required, Validators.maxLength(128) ] ],
       link: [ banner?.link, [ Validators.maxLength(512) ] ],

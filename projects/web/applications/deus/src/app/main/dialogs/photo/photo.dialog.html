@@ -1,0 +1,64 @@
+<div class="photo-dialog-header" matDialogTitle>
+
+  <h2>사진 {{ mode === 'create' ? '등록' : '수정' }}</h2>
+
+  <button
+    class="photo-dialog-close"
+    type="button"
+    mat-icon-button
+    matDialogClose
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+</div>
+
+<mat-dialog-content class="photo-dialog-content">
+
+  <form class="photo-dialog-form" [formGroup]="photoForm" (ngSubmit)="save()">
+
+    <mat-form-field class="photo-dialog-form-item">
+      <mat-label>이름</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="photo-dialog-form-item">
+      <mat-label>이미지 URL</mat-label>
+      <input matInput formControlName="resourceURL">
+    </mat-form-field>
+
+    <div class="photo-dialog-form-item">
+      <upload-input accept="image/*" (change)="_resolveAndSetImage($event)">
+    
+        <div class="photo-dialog-form-image-alt" *ngIf="!photoForm.get('resourceURL')!.value; else thumbnailAlt">
+          <mat-icon>add_a_photo</mat-icon>
+          <span>클릭 또는 드래그로 이미지 추가</span>
+        </div>
+    
+        <ng-template #thumbnailAlt>
+          <div class="photo-dialog-form-image">
+            <img [src]="photoForm.get('resourceURL')!.value">
+          </div>
+        </ng-template>
+    
+      </upload-input>
+    </div>
+
+    <div class="photo-dialog-form-item">
+      <mat-slide-toggle formControlName="active">노출</mat-slide-toggle>
+    </div>
+
+    <div class="photo-dialog-actions" matDialogActions>
+      <button
+        class="photo-dialog-form-submit"
+        type="submit"
+        matDialog
+        mat-flat-button
+        [disabled]="!canSave()"
+        color="primary"
+      >저장</button>
+    </div>
+
+  </form>
+
+</mat-dialog-content>

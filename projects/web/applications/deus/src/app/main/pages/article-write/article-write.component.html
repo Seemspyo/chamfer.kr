@@ -26,7 +26,7 @@
     <mat-slide-toggle formControlName="locked">비공개</mat-slide-toggle>
   </div>
 
-  <toast-editor class="write-form-editor" formControlName="content"></toast-editor>
+  <toast-editor class="write-form-editor" formControlName="content" [previewStyle]="editorStyle" [linkAttributes]="{ target: '_blank' }"></toast-editor>
 
   <div class="write-form-console">
     <button

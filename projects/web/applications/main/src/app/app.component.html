@@ -1,0 +1,45 @@
+<header
+  #header
+  class="header"
+  [class.header-sticked]="!onTop"
+  [class.header-hide]="headerShouldHide"
+>
+
+  <h1 class="header-title">
+    <a routerLink="/">
+      <img src="https://cdn.chamfer.kr/logo.png" alt="CHAMFER">
+      <h5>Chamfer not only cuts off the coners but also our clumsy bits</h5>
+    </a>
+  </h1>
+
+  <nav class="header-nav">
+    <div class="header-nav-button-container" *ngFor="let data of linkDatas">
+      <a
+        class="header-nav-button"
+        [routerLink]="data.link"
+      >
+        {{ data.label }}
+        <span
+          *ngIf="currentNavId === data.id"
+          class="header-nav-button-active"
+          @navActiveAnimation
+        ></span>
+      </a>
+    </div>
+  </nav>
+
+</header>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+
+<footer class="footer">
+
+  <span class="footer-text" [innerHTML]="siteInfo.footerText"></span>
+
+  <span class="footer-icon">
+    <img src="assets/images/footer-logo.png" alt="@CHAMFER">
+  </span>
+
+</footer>

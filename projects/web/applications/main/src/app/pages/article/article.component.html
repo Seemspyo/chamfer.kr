@@ -1,0 +1,51 @@
+<div class="article-list">
+
+  <h2 class="article-list-title">{{ category | uppercase }}</h2>
+
+  <ul class="article-list-wrapper">
+
+    <li class="article-list-item article-list-header">
+      <div class="article-list-item-wrapper">
+        <span>SUBJECT</span>
+        <span>NAME</span>
+        <span>DATE</span>
+      </div>
+    </li>
+
+    <li class="article-list-item" *ngFor="let article of articleListModel">
+      <a class="article-list-item-wrapper" [routerLink]="[ '/notice', article.uri || article.id ]">
+        <span>{{ article.title }}</span>
+        <span>{{ article.author?.username || '익명' }}</span>
+        <span>{{ article.createdAt | date: 'yyyy-MM-dd' }}</span>
+      </a>
+    </li>
+
+    <li class="article-list-item" *ngIf="!articleListModel.length">
+      <p class="article-list-item-dummy">등록된 글이 없습니다.</p>
+    </li>
+
+  </ul>
+
+  <div class="article-pagination">
+    <a
+      class="article-pagination-button"
+      [class.article-pagination-button-disabled]="pageIndex === 0"
+      routerLink="/notice"
+      [queryParams]="{ page: max(pageIndex - 5, 0) }"
+    >◀</a>
+    <a
+      *ngFor="let _ of getPagingData();let i = index"
+      class="article-pagination-button"
+      [class.article-pagination-button-active]="pageIndex === i"
+      routerLink="/notice"
+      [queryParams]="{ page: i }"
+    >{{ i + 1 }}</a>
+    <a
+      class="article-pagination-button"
+      [class.article-pagination-button-disabled]="pageIndex === getMaxIndex()"
+      routerLink="/notice"
+      [queryParams]="{ page: min(pageIndex + 5, getMaxIndex()) }"
+    >▶</a>
+  </div>
+
+</div>

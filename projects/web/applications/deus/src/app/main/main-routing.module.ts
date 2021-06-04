@@ -9,6 +9,7 @@ import { ArticleListComponent } from './pages/article-list/article-list.componen
 import { ArticleWriteComponent } from './pages/article-write/article-write.component';
 import { BannerComponent } from './pages/banner/banner.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 import { ProductComponent } from './pages/proudct/product.component';
 import { SiteInfoComponent } from './pages/site-info/site-info.component';
 import { SiteInfoResolver } from './pages/site-info/site-info.resolver';
@@ -28,7 +29,8 @@ const routes: Routes = [
       { path: 'write', component: ArticleWriteComponent },
       { path: 'write/:id', component: ArticleWriteComponent, resolve: { article: ArticleResolver } },
       { path: ':category', component: ArticleListComponent, data: { id: 'article-notice' } }
-    ] }
+    ] },
+    { path: 'gallery', component: GalleryComponent, data: { id: 'gallery' } }
   ] }
 ]
 

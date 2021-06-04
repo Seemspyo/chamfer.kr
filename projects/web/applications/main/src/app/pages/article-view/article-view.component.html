@@ -1,0 +1,25 @@
+<div class="article-view">
+
+  <h2 class="article-view-title">{{ article.title }}</h2>
+
+  <div class="article-view-info">
+
+    <div class="article-view-info-item">
+      <span class="article-view-info-label">작성자</span>
+      <span class="article-view-info-value">{{ article.author?.username || '익명' }}</span>
+    </div>
+
+    <div class="article-view-info-item">
+      <span class="article-view-info-label">작성일</span>
+      <span class="article-view-info-value">{{ article.createdAt | date: 'yyyy-MM-dd' }}</span>
+    </div>
+
+  </div>
+
+  <div class="article-view-content" #view></div>
+
+  <div class="article-view-actions">
+    <a class="article-view-link" [routerLink]="[ '/', article.category ]">목록으로</a>
+  </div>
+
+</div>

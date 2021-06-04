@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Banner, BannerCreateInput, BannerListData, BannerUpdateInput, ListSearch, Paging } from '@chamfer/server';
+import {
+  Banner,
+  BannerCreateInput,
+  BannerListData,
+  BannerUpdateInput,
+  ListSearch,
+  Paging
+} from '@chamfer/server';
 import { GQLClient } from 'common/graphql/client';
+import { HTTP_STATE_EXPLICIT } from 'common/http-transfer';
 import gql from 'graphql-tag';
 import { map } from 'rxjs/operators';
+import { makeUniqueKey } from './make-unique-key';
 import { GQLFieldOf } from './selection';
 
 
@@ -39,7 +48,7 @@ export class BannerAPI {
       }
     `;
 
-    return this.graphql.query<{ data: BannerListData }>(query, { search, paging }).pipe(
+    return this.graphql.query<{ data: BannerListData }>(query, { search, paging }, { params: { [ HTTP_STATE_EXPLICIT ]: makeUniqueKey(search, paging, select) } }).pipe(
       map(res => res.data)
     );
   }
@@ -56,7 +65,7 @@ export class BannerAPI {
       }
     `;
 
-    return this.graphql.query<{ data: BannerListData }>(query, { search, paging }).pipe(
+    return this.graphql.query<{ data: BannerListData }>(query, { search, paging }, { params: { [ HTTP_STATE_EXPLICIT ]: makeUniqueKey(search, paging, select) } }).pipe(
       map(res => res.data)
     );
   }

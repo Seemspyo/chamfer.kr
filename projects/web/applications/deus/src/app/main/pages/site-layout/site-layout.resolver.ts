@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { ConfigAPI } from 'common/api/config.api';
+import { SiteLayoutData, siteLayoutId } from 'common/api/configs/site-layout.config';
 import { of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 
-
-export interface SiteLayoutData {
-  mediaURL: string;
-  mediaActive: boolean;
-}
-
-export const siteLayoutId = 'chamfer.site-layout';
 
 @Injectable()
 export class SiteLayoutResolver implements Resolve<SiteLayoutData> {

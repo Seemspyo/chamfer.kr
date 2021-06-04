@@ -1,0 +1,70 @@
+@import '~@toast-ui/editor/dist/toastui-editor-viewer.css';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.article-view {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  &-title {
+    font: {
+      size: 32px;
+      weight: 600;
+    }
+    border-bottom: solid 1px #000;
+    padding: 8px 0;
+    letter-spacing: 0.5px;
+  }
+
+  &-info {
+    padding: 8px;
+    border-bottom: solid 1px #a9a9a9;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+
+    &-item {
+      padding: 4px 0;
+      margin: 0 8px;
+      font: {
+        size: 14px;
+        weight: 300;
+      }
+    }
+
+    &-label {
+      font-weight: 500;
+    }
+
+    &-value {
+      margin-left: 0.4em;
+    }
+
+  }
+
+  &-content {
+    width: 100%;
+    padding: 24px 12px;
+  }
+
+  &-actions {
+    margin-top: 82px;
+    display: flex;
+  }
+
+  &-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 24px;
+    border-radius: 4px;
+    border: solid 1px #595959;
+    font-size: 14px;
+  }
+
+}

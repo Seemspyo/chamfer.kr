@@ -12,7 +12,7 @@ import { ConfigAPI } from 'common/api/config.api';
 import { parseGQLError } from 'common/api/errors';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { siteInfoId, SiteInfo } from './site-info.resolver';
+import { siteInfoId, SiteInfo } from 'common/api/configs/site-info.config';
 
 
 @Component({

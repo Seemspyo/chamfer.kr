@@ -63,7 +63,7 @@ export class ProductDialog implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setUserFormOf(this.currentProduct);
+    this.setProductFormOf(this.currentProduct);
 
     // hook backdrop click event
     this.dialogRef.backdropClick().pipe(
@@ -182,7 +182,7 @@ export class ProductDialog implements OnInit, OnDestroy {
     control.setValue(value);
   }
 
-  private setUserFormOf(product?: Product) {
+  private setProductFormOf(product?: Product) {
     this.productForm = this.formBuilder.group({
       type: [ product?.type ?? productTypes.forward, [ Validators.required ] ],
       uri: [ product?.uri, [ requiredIfValidator(() => !this._isCurrentTypeIs(productTypes.forward)), Validators.maxLength(256) ] ],

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JSONData } from '@chamfer/server';
 import { GQLClient } from 'common/graphql/client';
+import { HTTP_STATE_EXPLICIT } from 'common/http-transfer';
 import gql from 'graphql-tag';
 import { map } from 'rxjs/operators';
 
@@ -33,7 +34,7 @@ export class ConfigAPI {
 
   public getConfig<T>(id: string) {
 
-    return this.graphql.query<{ config: JSONData|null }>(this.queries.get, { id }).pipe(
+    return this.graphql.query<{ config: JSONData|null }>(this.queries.get, { id }, { params: { [ HTTP_STATE_EXPLICIT ]: id } }).pipe(
       map(res => res.config && JSON.parse(res.config.data) as T)
     );
   }

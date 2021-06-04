@@ -17,10 +17,12 @@ import { SiteLayoutComponent } from './pages/site-layout/site-layout.component';
 import { ProductComponent } from './pages/proudct/product.component';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleWriteComponent } from './pages/article-write/article-write.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 
 import { UserDialog } from './dialogs/user/user.dialog';
 import { BannerDialog } from './dialogs/banner/banner.dialog';
 import { ProductDialog } from './dialogs/product/product.dialog';
+import { PhotoDialog } from './dialogs/photo/photo.dialog';
 
 import { UserAPI } from 'common/api/user.api';
 import { UploadAPI } from 'common/api/upload.api';
@@ -28,6 +30,7 @@ import { BannerAPI } from 'common/api/banner.api';
 import { ConfigAPI } from 'common/api/config.api';
 import { ProductAPI } from 'common/api/product.api';
 import { ArticleAPI } from 'common/api/article.api';
+import { PhotoAPI } from 'common/api/photo.api';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -57,10 +60,12 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     ProductComponent,
     ArticleListComponent,
     ArticleWriteComponent,
+    GalleryComponent,
 
     UserDialog,
     BannerDialog,
-    ProductDialog
+    ProductDialog,
+    PhotoDialog
   ],
   imports: [
     CommonModule,
@@ -97,7 +102,8 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     BannerAPI,
     ConfigAPI,
     ProductAPI,
-    ArticleAPI
+    ArticleAPI,
+    PhotoAPI
   ]
 })
 export class MainModule { }

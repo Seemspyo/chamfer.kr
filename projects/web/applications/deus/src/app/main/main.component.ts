@@ -139,6 +139,13 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       link: '/products'
     },
     {
+      id: 'gallery',
+      type: 'routerLink',
+      iconText: 'motion_photos_on',
+      label: '갤러리 관리',
+      link: '/gallery'
+    },
+    {
       id: 'article',
       type: 'group',
       iconText: 'feed',

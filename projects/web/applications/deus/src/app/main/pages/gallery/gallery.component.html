@@ -1,0 +1,71 @@
+<div class="console">
+
+  <form class="console-search" [formGroup]="searchForm">
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색 항목</mat-label>
+      <mat-select formControlName="searchTargets" multiple>
+        <mat-option value="name">이름</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="console-search-item">
+      <mat-label>검색값</mat-label>
+      <input matInput formControlName="searchValue" (keydown)="refresh()">
+    </mat-form-field>
+
+  </form>
+
+  <div class="console-action">
+
+    <button
+      class="console-action-button"
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="_openPhotoDialogOf()"
+    ><mat-icon>add_a_photo</mat-icon> 사진 추가</button>
+
+  </div>
+
+</div>
+
+<div class="photo-list">
+
+  <mat-card class="photo-item" *ngFor="let photo of galleryModel">
+
+    <mat-card-header>
+      <mat-card-title>
+        <ng-container *ngIf="!photo.active">[비공개] </ng-container>
+        {{ photo.name }}
+      </mat-card-title>
+      <mat-card-subtitle>등록일: {{ photo.createdAt | date: 'yyyy-MM-dd HH:mm' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <img mat-card-image [src]="photo.resourceURL" [alt]="photo.name">
+
+    <mat-card-actions>
+      <button
+        type="button"
+        mat-stroked-button
+        color="primary"
+        (click)="_openPhotoDialogOf(photo)"
+      >수정</button>
+      <button
+        type="button"
+        mat-stroked-button
+        color="warn"
+        (click)="_deletePhoto(photo)"
+      >삭제</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>
+
+<mat-paginator
+  class="paginator"
+  [length]="totalLength"
+  [pageSize]="10"
+  [pageSizeOptions]="[ 10, 30, 50 ]"
+></mat-paginator>
