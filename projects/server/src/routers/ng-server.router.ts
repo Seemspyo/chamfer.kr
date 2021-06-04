@@ -28,14 +28,6 @@ interface AngularIvyServerModule {
 
 declare const __non_webpack_require__: NodeRequire;
 
-function importOnce(path: string) {
-  const module = __non_webpack_require__(path);
-
-  delete __non_webpack_require__.cache[__non_webpack_require__.resolve(path)];
-
-  return module;
-}
-
 export class AngularIvyServerRouter extends Router {
 
   constructor(
@@ -119,7 +111,7 @@ export class AngularIvyServerRouter extends Router {
 
         // render Ivy module
         if (serverBundlePath && existsSync(serverBundlePath)) {
-          const bundle: AngularIvyServerModule = importOnce(serverBundlePath);
+          const bundle: AngularIvyServerModule = __non_webpack_require__(serverBundlePath);
 
           indexHTML = await bundle.renderModule(bundle[serverModule], {
             document: indexHTML,

@@ -201,9 +201,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.currentNavId = id;
     // calling swiper method brokes route animations
-    setTimeout(() => {
-      this.swiperComponentRef.swiperRef.slideTo(this.linkDatas.findIndex(data => data.id === this.currentNavId), this.isFirstNavigation ? 0 : void 0);
-    });
+    if (this.isBrowser) {
+      setTimeout(() => {
+        this.swiperComponentRef.swiperRef.slideTo(this.linkDatas.findIndex(data => data.id === this.currentNavId), this.isFirstNavigation ? 0 : void 0);
+      });
+    }
     this.changeDetector.markForCheck();
   }
 
