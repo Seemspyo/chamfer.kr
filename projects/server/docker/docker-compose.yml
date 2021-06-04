@@ -38,5 +38,6 @@ services:
     ports:
       - 2400:2400
     volumes:
+      - ./docker/chamfer_ng/log:/usr/src/ng/log
       - ./docker/chamfer_ng/web:/usr/src/ng/web
       - ./environments:/usr/src/ng/environments

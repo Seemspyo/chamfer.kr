@@ -4,6 +4,7 @@ export type { JSONData } from './src/models/json.model';
 export type { Product } from './src/models/product.model';
 export type { UploadLog } from './src/models/upload.model';
 export type { User } from './src/models/user.model';
+export type { Photo } from './src/models/photo.model';
 
 export { bannerLinkTargets, BannerLinkTarget } from './src/models/banner.def';
 export { productTypes, ProductType } from './src/models/product.def';
@@ -16,6 +17,7 @@ export type { ArticleFetchOptions, ArticleCreateInput, ArticleUpdateInput, Artic
 export type { BannerCreateInput, BannerUpdateInput, BannerListData } from './src/graphql/resolvers/banner.resolver';
 export type { ProductCreateInput, ProductUpdateInput, ProductListData } from './src/graphql/resolvers/product.resolver';
 export type { UserCreateInput, UserUpdateInput, UserListData } from './src/graphql/resolvers/user.resolver';
+export type { PhotoCreateInput, PhotoUpdateInput, PhotoListData } from './src/graphql/resolvers/photo.resolver';
 
 export { GQL_ERROR_CODES, GQLErrorCode } from './src/errors/code';
 export { AUTH_KEY } from './lib/auth-strategy/@auth-strategy';

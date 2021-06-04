@@ -5,11 +5,11 @@ import { Brackets, SelectQueryBuilder } from 'typeorm';
 @InputType()
 export class ListSearch {
 
-  @Field({ nullable: true, description: 'target property name' })
-  orderBy?: string;
+  @Field({ nullable: true, defaultValue: 'id', description: 'target property name' })
+  orderBy?: string = 'id';
 
-  @Field({ nullable: true, defaultValue: 'ASC' })
-  orderDirection?: 'ASC'|'DESC' = 'ASC';
+  @Field({ nullable: true, defaultValue: 'DESC' })
+  orderDirection?: 'ASC'|'DESC' = 'DESC';
 
   @Field(type => [ String ], { nullable: true, description: 'target properties to search', defaultValue: [] })
   searchTargets!: string[];

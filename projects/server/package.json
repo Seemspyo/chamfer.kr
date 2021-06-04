@@ -1,6 +1,6 @@
 {
   "name": "@chamfer/server",
-  "version": "0.1.0-beta",
+  "version": "0.2.0-beta",
   "author": "Chamfer <chamfer@naver.com> (https://chamfer.kr)",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
@@ -14,7 +14,7 @@
     "build-lib": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@chamfer/util": "^0.0.0",
+    "@chamfer/util": "^0.0.1",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
     "apollo-server-koa": "^2.24.1",

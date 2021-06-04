@@ -11,7 +11,7 @@ const {
 
   NAME = 'chamfer-ng',
   PORT = '2400',
-  SYSTEM_LOG = 'log/api.log',
+  SYSTEM_LOG = 'log/ng.log',
 
   DEV_MODE = 'true',
 

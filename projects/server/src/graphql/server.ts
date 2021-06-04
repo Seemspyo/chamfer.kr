@@ -41,6 +41,7 @@ import { ArticleResolver } from './resolvers/article.resolver';
 import { ProductResolver } from './resolvers/product.resolver';
 import { UserResolver } from './resolvers/user.resolver';
 import { JSONDataResolver } from './resolvers/json.resolver';
+import { PhotoResolver } from './resolvers/photo.resolver';
 
 
 export class GQLServer {
@@ -61,7 +62,8 @@ export class GQLServer {
       ArticleResolver,
       ProductResolver,
       UploadResolver,
-      JSONDataResolver
+      JSONDataResolver,
+      PhotoResolver
     ]);
     const graphql = this.createGQLServer(schema);
 
