@@ -68,3 +68,17 @@
   }
 
 }
+
+
+@media (max-width: 768px) {
+
+  .article-view {
+    padding: 0 24px;
+
+    &-title {
+      font-size: 26px;
+    }
+
+  }
+
+}

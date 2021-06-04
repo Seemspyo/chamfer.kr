@@ -28,6 +28,7 @@ import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import remark from 'remark';
 import toHTML from 'remark-html';
 import linkAttributes from 'remark-external-links';
+import { SwiperComponent } from 'swiper/angular';
 
 
 interface RouterLinkData {
@@ -86,11 +87,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('header')
   headerElRef!: ElementRef<HTMLElement>;
 
+  @ViewChild(SwiperComponent)
+  swiperComponentRef!: SwiperComponent;
+
   public onTop = true;
   public headerShouldHide = false;
   private prevScrollTop = 0;
 
   private isBrowser: boolean;
+  private isFirstNavigation = true;
 
   private destroyed = new Subject<void>();
 
@@ -124,6 +129,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.detectCurrentNavWith(data);
         this.setSubtitleWith(data);
+
+        if (this.isFirstNavigation) {
+          this.isFirstNavigation = false;
+        }
       }
     });
   }
@@ -155,6 +164,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     if (id === this.currentNavId) return;
 
     this.currentNavId = id;
+    this.swiperComponentRef.swiperRef.slideTo(this.linkDatas.findIndex(data => data.id === this.currentNavId), this.isFirstNavigation ? 0 : void 0);
     this.changeDetector.markForCheck();
   }
 

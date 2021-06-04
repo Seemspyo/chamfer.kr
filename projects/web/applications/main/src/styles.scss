@@ -24,6 +24,29 @@ li { list-style-type: none; }
 
 }
 
+::-webkit-scrollbar {
+  width: 12px; height: 12px;
+
+  &-track {
+    background-color: transparent;
+  }
+
+  &-thumb {
+    border: solid 2px transparent;
+    border-radius: 8px;
+    background: {
+      color: rgba(#8e8e8e, 0.8);
+      clip: content-box;
+    }
+
+    &:hover {
+      background-color: #8e8e8e;
+    }
+
+  }
+
+}
+
 @include cdk-overlay();
 
 .noto-kr {

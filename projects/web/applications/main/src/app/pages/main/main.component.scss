@@ -62,3 +62,39 @@
   }
 
 }
+
+
+@media (max-width: 1028px) {
+
+  :host {
+    flex-direction: column;
+  }
+
+  .main {
+
+    &-banner {
+      width: 100%;
+      padding-bottom: 74%;
+    }
+
+    &-media {
+      width: 100%;
+      padding-bottom: 125%;
+      margin: {
+        top: 20px;
+        left: 0;
+      }
+    }
+
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  :host {
+    padding: 0;
+  }
+
+}

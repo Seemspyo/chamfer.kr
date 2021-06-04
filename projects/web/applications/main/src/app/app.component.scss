@@ -25,6 +25,7 @@
   }
 
   &-title {
+    flex-shrink: 0;
 
     a {
       display: flex;
@@ -33,17 +34,8 @@
     }
 
     img {
-      width: auto; height: 52px;
+      width: auto; height: 84px;
       object-fit: contain;
-    }
-
-    h5 {
-      margin-top: 14px;
-      font: {
-        size: 11px;
-        weight: 300;
-      }
-      letter-spacing: 0.3px;
     }
 
   }
@@ -53,17 +45,37 @@
       left: 40px;
       bottom: 8px;
     }
-    display: flex;
+    width: 0;
+    flex: auto;
+
+    ::ng-deep &-slide {
+
+      &-container {
+        width: 100%;
+      }
+
+      flex-shrink: 0;
+
+      &:not(:first-child) {
+        position: relative;
+
+        &::before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0; left: 0;
+          width: 1px; height: 1em;
+          background-color: #000;
+        }
+
+      }
+
+    }
 
     &-button {
 
       &-container {
         padding: 0 50px;
-
-        &:not(:first-child) {
-          border-left: solid 1px #000;
-        }
-
       }
 
       display: block;
@@ -74,10 +86,12 @@
       }
       letter-spacing: -0.2px;
       position: relative;
+      white-space: nowrap;
+      padding-bottom: 8px;
 
       &-active {
         position: absolute;
-        bottom: -8px; left: 0;
+        bottom: 0; left: 0;
         width: 100%; height: 2px;
         background-color: var(--color-chamfer-green);
       }
@@ -103,6 +117,18 @@
   padding: 54px 50px;
   position: relative;
 
+  &-icon {
+    position: absolute;
+    top: 54px; right: 50px;
+    height: 54px;
+
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+
+  }
+
   &-text {
     display: block;
     text-align: center;
@@ -115,14 +141,100 @@
     white-space: pre-line;
   }
 
-  &-icon {
-    position: absolute;
-    top: 54px; right: 50px;
-    height: 54px;
+}
 
-    img {
-      height: 100%;
-      object-fit: contain;
+
+@media (max-width: 768px) {
+
+  .header {
+    top: -22vw;
+    padding: 6.8vw 0 1.6vw;
+    flex-direction: column;
+    align-items: center;
+
+    &-title {
+
+      img {
+        height: 11.68vw;
+      }
+
+    }
+
+    &-nav {
+      margin: 6vw 0 0;
+      width: 100%;
+
+      &-button {
+
+        &-container {
+          padding: 0 5.6vw;
+        }
+
+        font-size: 3vw;
+      }
+
+    }
+
+  }
+
+  .footer {
+    min-height: auto;
+    padding: 20px 5.6vw 42px;
+    display: flex;
+    flex-direction: column;
+
+    &-icon {
+      position: relative;
+      top: auto; right: auto;
+      align-self: flex-end;
+      height: 37px;
+    }
+
+    &-text {
+      margin-top: 64px;
+      font-size: 3vw;
+    }
+
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .header {
+    top: -100px;
+    padding: 32px 0 8px;
+
+    &-title {
+
+      img {
+        height: 52px;
+      }
+
+    }
+
+    &-nav {
+      margin-top: 28px;
+
+      &-button {
+
+        &-container {
+          padding: 0 27px;
+        }
+
+        font-size: 14.5px;
+      }
+
+    }
+
+  }
+
+  .footer {
+    padding: 20px 32px 42px;
+
+    &-text {
+      font-size: 14px;
     }
 
   }

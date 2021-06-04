@@ -85,7 +85,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   public getMaxIndex() {
     
-    return Math.floor(this.total / itemsPerPage);
+    return Math.ceil(this.total / itemsPerPage) - 1;
   }
 
   public max(...args: number[]) {

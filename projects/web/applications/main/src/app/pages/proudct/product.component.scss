@@ -15,7 +15,7 @@
   &-item {
     width: 536px;
     margin: 24px;
-    max-width: 100%;
+    max-width: calc(50% - 48px);
 
     &-wrapper {
       width: 100%;
@@ -99,6 +99,37 @@
       size: 18px;
       weight: 400;
     }
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  .product {
+
+    &-list {
+      padding: 24px;
+    }
+
+    &-item {
+      max-width: calc(50% - 24px);
+      margin: 12px;
+    }
+
+    &-info {
+      padding: 12px;
+
+      &-title {
+        font-size: 16px;
+      }
+
+      &-price {
+        font-size: 14px;
+      }
+
+    }
+
   }
 
 }
