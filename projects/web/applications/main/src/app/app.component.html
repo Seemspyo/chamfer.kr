@@ -38,8 +38,8 @@
 
 </header>
 
-<div class="content">
-  <router-outlet></router-outlet>
+<div class="content" [@routeAnimation]="getRouteState(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
 </div>
 
 <footer class="footer">

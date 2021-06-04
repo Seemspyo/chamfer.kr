@@ -1,4 +1,11 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  group,
+  query,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
@@ -19,7 +26,8 @@ import {
   ActivatedRouteSnapshot,
   ActivationEnd,
   Data,
-  Router
+  Router,
+  RouterOutlet
 } from '@angular/router';
 import { ConfigAPI } from 'common/api/config.api';
 import { SiteInfo, siteInfoId } from 'common/api/configs/site-info.config';
@@ -54,11 +62,33 @@ export class AppData {
 
 }
 
-const navActiveAnimation = trigger('navActiveAnimation', [
+const
+navActiveAnimation = trigger('navActiveAnimation', [
 
   transition(':enter', [
     style({ transform: 'scaleX(0)' }),
     animate('0.3s ease', style({ transform: 'scaleX(1)' }))
+  ])
+
+]),
+routeAnimation = trigger('routeAnimation', [
+
+  transition('* <=> *', [
+    style({ position: 'relative' }),
+    query(':leave', [
+      style({ opacity: '1', position: 'absolute', top: '0', left: '0', width: '100%' })
+    ], { optional: true }),
+    query(':enter', [
+      style({ opacity: '0', zIndex: '3', position: 'relative' })
+    ], { optional: true }),
+    group([
+      query(':enter', [
+        animate('0.3s', style({ opacity: '1' }))
+      ], { optional: true }),
+      query(':leave', [
+        animate('0.2s', style({ opacity: '0' }))
+      ], { optional: true })
+    ])
   ])
 
 ]);
@@ -69,7 +99,8 @@ const navActiveAnimation = trigger('navActiveAnimation', [
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    navActiveAnimation
+    navActiveAnimation,
+    routeAnimation
   ]
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -158,13 +189,21 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.destroyed.complete();
   }
 
+  public getRouteState(outlet: RouterOutlet) {
+
+    return outlet.isActivated ? outlet.activatedRoute : '';
+  }
+
   private detectCurrentNavWith(data: Data) {
     const id = data.navId;
 
     if (id === this.currentNavId) return;
 
     this.currentNavId = id;
-    this.swiperComponentRef.swiperRef.slideTo(this.linkDatas.findIndex(data => data.id === this.currentNavId), this.isFirstNavigation ? 0 : void 0);
+    // calling swiper method brokes route animations
+    setTimeout(() => {
+      this.swiperComponentRef.swiperRef.slideTo(this.linkDatas.findIndex(data => data.id === this.currentNavId), this.isFirstNavigation ? 0 : void 0);
+    });
     this.changeDetector.markForCheck();
   }
 
