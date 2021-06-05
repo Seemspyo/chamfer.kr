@@ -10,7 +10,7 @@
   >
     <ng-template swiperSlide *ngFor="let banner of bannerList">
       <a class="main-banner-slide-item" [attr.href]="banner.link || null" [attr.target]="banner.linkTarget ? '_' + banner.linkTarget : null">
-        <img [src]="banner.thumbnailURL">
+        <img [src]="isMobile && banner.thumbnailURLAlt || banner.thumbnailURL">
       </a>
     </ng-template>
   </swiper>
