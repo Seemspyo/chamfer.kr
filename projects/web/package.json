@@ -1,7 +1,7 @@
 {
   "name": "@chamfer/web",
   "version": "0.0.0-alpha",
-  "author": "Chamfer <chamfer@naver.com> (https://chamfer.kr)",
+  "author": "Chamfer <chamfer29@naver.com> (https://chamfer.kr)",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "build": "ng build",

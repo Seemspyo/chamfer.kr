@@ -1,7 +1,7 @@
 {
   "name": "@chamfer/util",
   "version": "0.0.1",
-  "author": "Chamfer <chamfer@naver.com> (https://chamfer.kr)",
+  "author": "Chamfer <chamfer29@naver.com> (https://chamfer.kr)",
   "license": "MIT",
   "scripts": {
     "build-lib": "tsc -p tsconfig.json"
