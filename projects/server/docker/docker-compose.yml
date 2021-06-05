@@ -21,6 +21,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.api
+    environment:
+      TZ: Asia/Seoul
     ports:
       - 2800:2800
     volumes:
@@ -35,6 +37,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.ng
+    environment:
+      TZ: Asia/Seoul
     ports:
       - 2400:2400
     volumes:
