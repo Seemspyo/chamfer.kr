@@ -4,7 +4,6 @@ import {
   Box3,
   DirectionalLight,
   HemisphereLight,
-  MathUtils,
   Object3D,
   PerspectiveCamera,
   Scene,
@@ -12,8 +11,11 @@ import {
   WebGLRenderer
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { toggleFullscreenWith } from './modules/toggle-fullscreen-with';
+import { boxIntoView } from './modules/box-into-view';
+import { resizeRendererAuto } from './modules/resize-renderer-auto';
+import { loadGLTFAsync } from './modules/load-gltf';
 
 
 (() => {
@@ -98,7 +100,7 @@ import { toggleFullscreenWith } from './modules/toggle-fullscreen-with';
 
         const box = new Box3().setFromObject(root.scene);
 
-        frameBox(box, camera, 2);
+        boxIntoView(box, camera, 2);
         camera.position.x += 0.08;
         camera.position.y += 0.12;
 
@@ -135,45 +137,5 @@ import { toggleFullscreenWith } from './modules/toggle-fullscreen-with';
     }
 
     requestAnimationFrame(render);
-  }
-
-  function frameBox(box: Box3, camera: PerspectiveCamera, frameScale = 1.2) {
-    const origin = new Vector3();
-
-    const
-    boxSize = box.getSize(origin).length(),
-    screenHalf = boxSize * frameScale / 2,
-    boxCenter = box.getCenter(origin);
-
-    const
-    distance = screenHalf / Math.tan(MathUtils.degToRad(camera.fov) / 2),
-    direction = new Vector3().subVectors(camera.position, boxCenter)
-                             .multiply(new Vector3(1, 0, 1)) // to forward
-                             .normalize();
-
-    camera.position.copy(direction.multiplyScalar(distance).add(boxCenter));
-    camera.near = boxSize / 100;
-    camera.far = boxSize * 100;
-
-    camera.updateProjectionMatrix();
-    camera.lookAt(...boxCenter.toArray());
-  }
-
-  function resizeRendererAuto(renderer: WebGLRenderer) {
-    const { width, height, clientWidth, clientHeight } = renderer.domElement;
-
-    const shouldResize = width !== clientWidth || height !== clientHeight;
-
-    if (shouldResize) {
-      renderer.setSize(clientWidth, clientHeight, false);
-    }
-
-    return shouldResize;
-  }
-
-  function loadGLTFAsync(url: string, onProgress?: (event: ProgressEvent<EventTarget>) => void) {
-    const loader = new GLTFLoader();
-
-    return new Promise<GLTF>((resolve, reject) => loader.load(url, resolve, onProgress, reject));
   }
 })();
