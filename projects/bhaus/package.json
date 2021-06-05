@@ -1,0 +1,12 @@
+{
+  "name": "@chamfer/bhaus",
+  "private": true,
+  "type": "module",
+  "author": "Chamfer <chamfer29@naver.com> (https://chamfer.kr)",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "build": "webpack --env mode=development",
+    "build:prod": "webpack --env mode=production",
+    "serve": "webpack serve"
+  }
+}
