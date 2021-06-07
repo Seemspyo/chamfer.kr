@@ -31,8 +31,8 @@ import {
 } from '@angular/router';
 import { ConfigAPI } from 'common/api/config.api';
 import { SiteInfo, siteInfoId } from 'common/api/configs/site-info.config';
-import { fromEvent, merge, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { fromEvent, interval, merge, Subject } from 'rxjs';
+import { debounceTime, map, take, takeUntil } from 'rxjs/operators';
 import remark from 'remark';
 import toHTML from 'remark-html';
 import linkAttributes from 'remark-external-links';
@@ -182,6 +182,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       debounceTime(100)
     )
     .subscribe(() => this.detectScroll());
+
+    interval(200).pipe(
+      take(1),
+      takeUntil(this.destroyed)
+    ).subscribe(() => {
+      this.swiperComponentRef.swiperRef.update();
+    });
   }
 
   ngOnDestroy() {
@@ -202,7 +209,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentNavId = id;
     // calling swiper method brokes route animations
     if (this.isBrowser) {
-      setTimeout(() => {
+      interval(0).pipe( take(1) ).subscribe(() => {
         this.swiperComponentRef.swiperRef.slideTo(this.linkDatas.findIndex(data => data.id === this.currentNavId), this.isFirstNavigation ? 0 : void 0);
       });
     }
