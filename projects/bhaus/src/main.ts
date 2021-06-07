@@ -72,6 +72,25 @@ import { loadGLTFAsync } from './modules/load-gltf';
       let prevKey: string|null = null;
       let loading = false;
 
+
+      let
+      toggleProgress: (state: boolean) => void,
+      onProgress: (event: ProgressEvent) => void;
+
+      {
+        const
+        progressContainer = document.querySelector<HTMLElement>('.loading'),
+        progressEl = document.querySelector<HTMLElement>('.loading-progress-state');
+  
+        if (progressContainer && progressEl) {
+          toggleProgress = state => progressContainer.classList[state ? 'add' : 'remove']('loading-visible');
+          onProgress = ({ loaded, total }) => progressEl.style.setProperty('width', `${ loaded / total * 100 }%`);
+        } else {
+          toggleProgress =
+          onProgress = () => void 0;
+        }
+      }
+
       const setObjectFrom = async (el: HTMLElement) => {
         const key = el.dataset.color;
 
@@ -82,14 +101,16 @@ import { loadGLTFAsync } from './modules/load-gltf';
         if (!url) return;
 
         loading = true;
+        toggleProgress(true);
 
         let root: GLTF;
         try {
-          root = await loadGLTFAsync(url);
+          root = await loadGLTFAsync(url, onProgress);
         } catch {
           return;
         } finally {
           loading = false;
+          toggleProgress(false);
         }
 
         if (prevRootObject) scene.remove(prevRootObject);

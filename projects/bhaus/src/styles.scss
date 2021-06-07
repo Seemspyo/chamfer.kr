@@ -190,6 +190,46 @@ li { list-style-type: none; }
 
 }
 
+.loading {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(#fff, 0.8);
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:not(&-visible) {
+    display: none;
+  }
+
+  &-progress {
+
+    &-state {
+
+      &-container {
+        margin-top: 4px;
+        width: 135px; height: 8px;
+        border: solid 1px #000000;
+        border-radius: 4px;
+        font: {
+          size: 14px;
+          weight: 500;
+        }
+        letter-spacing: 0.6px;
+      }
+
+      display: block;
+      width: 0; height: 100%;
+      transition: width 0.2s ease;
+      background-color: var(--chamfer-green);
+    }
+
+  }
+
+}
+
 
 @media (display-mode: fullscreen) {
 
