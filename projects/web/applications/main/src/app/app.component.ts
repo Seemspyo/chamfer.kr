@@ -217,7 +217,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setSubtitleWith(data: Data) {
-    const title = (data.title ? `${ data.title } - ` : '') + 'CHAMFER' ;
+    const title = (data.title ? `${ data.title } - ` : '') + 'CHAMFER 챔퍼' ;
     
     this.title.setTitle(title);
     this.meta.addTag({ property: 'og:title', content: title }, true);
