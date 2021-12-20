@@ -1,22 +1,33 @@
 <div class="main-banner">
-
-  <swiper
-    class="main-banner-slide"
-    [loop]="bannerList.length > 1"
-    [autoplay]="{ delay: 3e3, disableOnInteraction: false }"
-    [speed]="1e3"
-    [watchOverflow]="true"
-    [pagination]="isBrowser && { clickable: true }"
-  >
-    <ng-template swiperSlide *ngFor="let banner of bannerList">
-      <a class="main-banner-slide-item" [attr.href]="banner.link || null" [attr.target]="banner.linkTarget ? '_' + banner.linkTarget : null">
-        <img [src]="isMobile && banner.thumbnailURLAlt || banner.thumbnailURL">
-      </a>
-    </ng-template>
-  </swiper>
-
+  <div class="main-banner-wrapper">
+    <swiper
+      class="main-banner-slide"
+      [loop]="bannerList.length > 1"
+      [autoplay]="{ delay: 3e3, disableOnInteraction: false }"
+      [speed]="1e3"
+      [watchOverflow]="true"
+      [pagination]="isBrowser && { clickable: true }"
+    >
+      <ng-template swiperSlide *ngFor="let banner of bannerList">
+        <a
+          class="main-banner-slide-item"
+          [attr.href]="banner.link || null"
+          [attr.target]="banner.linkTarget ? '_' + banner.linkTarget : null"
+        >
+          <img
+            [src]="(isMobile && banner.thumbnailURLAlt) || banner.thumbnailURL"
+          />
+        </a>
+      </ng-template>
+    </swiper>
+  </div>
 </div>
 
 <div class="main-media" *ngIf="mediaConfig.mediaActive && mediaConfig.mediaURL">
-  <iframe [src]="mediaConfig.mediaURL | safe: 'resourceUrl'" allow="fullscreen"></iframe>
+  <div class="main-media-wrapper">
+    <iframe
+      [src]="mediaConfig.mediaURL | safe: 'resourceUrl'"
+      allow="fullscreen"
+    ></iframe>
+  </div>
 </div>

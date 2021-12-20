@@ -4,10 +4,12 @@
   [class.header-sticked]="!onTop && !headerShouldHide"
   [class.header-hide]="headerShouldHide"
 >
-
   <h1 class="header-title">
     <a routerLink="/">
-      <img src="assets/images/header-logo.png" alt="CHAMFER. Chamfer not only cuts off the coners but also our clumsy bits">
+      <img
+        src="assets/images/header-logo-211220.png"
+        alt="CHAMFER. Chamfer not only cuts off the coners but also our clumsy bits"
+      />
     </a>
   </h1>
 
@@ -20,10 +22,7 @@
     >
       <ng-template swiperSlide *ngFor="let data of linkDatas">
         <div class="header-nav-button-container">
-          <a
-            class="header-nav-button"
-            [routerLink]="data.link"
-          >
+          <a class="header-nav-button" [routerLink]="data.link">
             {{ data.label }}
             <span
               *ngIf="currentNavId === data.id"
@@ -35,7 +34,6 @@
       </ng-template>
     </swiper>
   </nav>
-
 </header>
 
 <div class="content" [@routeAnimation]="getRouteState(outlet)">
@@ -43,11 +41,9 @@
 </div>
 
 <footer class="footer">
-
   <a class="footer-icon" href="https://www.instagram.com/chamfer_design/">
-    <img src="assets/images/footer-logo.png" alt="@CHAMFER">
+    <img src="assets/images/footer-logo.png" alt="@CHAMFER" />
   </a>
 
   <span class="footer-text" [innerHTML]="siteInfo.footerText"></span>
-
 </footer>
